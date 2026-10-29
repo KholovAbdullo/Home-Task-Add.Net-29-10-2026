@@ -7,39 +7,39 @@ namespace Application.Services;
 public class MentorService(MentorRepository mentorRepository) : IMentorService
 {
     private MentorRepository mentorRepository1 = mentorRepository;
-    public void AddMentor(Mentors mentor)
+    public async Task AddMentor(Mentors mentor)
     {
-       var result=mentorRepository1.AddMentor(mentor);
+       var result=await mentorRepository1.AddMentor(mentor);
        if(result)Console.WriteLine("Added successfully!");
        else Console.WriteLine("Added nashud!");
     }
 
-    public void DeleteMentor(int mentorId)
+    public async Task DeleteMentor(int mentorId)
     {
-        var result=mentorRepository1.DeleteMentor(mentorId);
+        var result=await mentorRepository1.DeleteMentor(mentorId);
         if(result)Console.WriteLine("Delete successfully!");
         else Console.WriteLine("Delete nashud!");
     }
 
-    public void GetAllMentor()
+    public async Task GetAllMentor()
     {
-        var result = mentorRepository1.GetMentor();
+        var result =await mentorRepository1.GetMentor();
         foreach (var m in result)
         {
             Console.WriteLine(m.Id+" "+m.Fullname+" "+m.Email+" "+m.Phone+" "+m.Specialization);
         }
     }
 
-    public void GetMentor(int mentorId)
+    public async Task GetMentor(int mentorId)
     {
-        var mentor=mentorRepository1.GetMentors(mentorId);
+        var mentor=await mentorRepository1.GetMentors(mentorId);
         Console.WriteLine(mentor.Id+" "+mentor.Fullname+" "+mentor.Email+" "+mentor.Phone+" "+mentor.Specialization);
 
     }
 
-    public void UpdateMentor(Mentors mentor)
+    public async Task UpdateMentor(Mentors mentor)
     {
-        var result=mentorRepository1.UpdateMentor(mentor);
+        var result=await mentorRepository1.UpdateMentor(mentor);
         if(result)Console.WriteLine("Update successfully!");
         else Console.WriteLine("Update nashud!");
     }

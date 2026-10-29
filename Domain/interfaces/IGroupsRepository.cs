@@ -4,9 +4,9 @@ namespace Domain.interfaces;
 
 public interface IGroupsRepository
 {
-    bool AddGroup(Groups group);
-    bool UpdateGroup(Groups group);
-    bool DeleteGroup(int groupId);
-    Groups GetGroup(int groupId);
-    List<Groups> GetGroups();
+    Task<bool> AddGroup(Groups group);
+    Task<bool> UpdateGroup(Groups group);
+    Task<bool> DeleteGroup(int groupId);
+    Task<Groups> GetGroup(int groupId);
+    Task<List<Groups>> GetGroups();
 }

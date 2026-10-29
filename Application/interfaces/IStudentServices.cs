@@ -4,9 +4,9 @@ namespace Application.interfaces;
 
 public interface IStudentServices
 {
-    void AddStudent(Students student);
-    void UpdateStudent(Students student);
-    void DeleteStudent(int studentId);
-    void GetStudent(int studentId);
-    void GetAllStudents();
+    Task AddStudent(Students student);
+    Task UpdateStudent(Students student);
+    Task DeleteStudent(int studentId);
+    Task GetStudent(int studentId);
+    Task GetAllStudents();
 }

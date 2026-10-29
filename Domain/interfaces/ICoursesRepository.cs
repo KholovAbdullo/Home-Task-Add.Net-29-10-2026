@@ -4,9 +4,9 @@ namespace Domain.interfaces;
 
 public interface ICoursesRepository
 {
-    bool AddCourses(Courses courses);
-    bool UpdateCourses(Courses courses);
-    bool DeleteCourses(int courseId);
-    Courses GetCourse(int courseId);
-    List<Courses> GetCourses();
+    Task<bool> AddCourses(Courses courses);
+    Task<bool> UpdateCourses(Courses courses);
+    Task<bool> DeleteCourses(int courseId);
+    Task<Courses> GetCourse(int courseId);
+    Task<List<Courses>> GetCourses();
 }

@@ -4,9 +4,9 @@ namespace Application.interfaces;
 
 public interface IMentorService
 {
-    void AddMentor(Mentors mentor);
-    void UpdateMentor(Mentors mentor);
-    void DeleteMentor(int mentorId);
-    void GetMentor(int mentorId);
-    void GetAllMentor();
+    Task AddMentor(Mentors mentor);
+    Task UpdateMentor(Mentors mentor);
+    Task DeleteMentor(int mentorId);
+    Task GetMentor(int mentorId);
+    Task GetAllMentor();
 }
