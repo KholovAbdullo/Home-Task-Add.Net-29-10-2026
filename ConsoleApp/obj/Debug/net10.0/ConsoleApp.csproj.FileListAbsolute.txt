@@ -24,3 +24,4 @@ C:\Users\user\Desktop\Add.Net praces\Practes\ConsoleApp\obj\Debug\net10.0\refint
 C:\Users\user\Desktop\Add.Net praces\Practes\ConsoleApp\obj\Debug\net10.0\ConsoleApp.pdb
 C:\Users\user\Desktop\Add.Net praces\Practes\ConsoleApp\obj\Debug\net10.0\ConsoleApp.genruntimeconfig.cache
 C:\Users\user\Desktop\Add.Net praces\Practes\ConsoleApp\obj\Debug\net10.0\ref\ConsoleApp.dll
+C:\Users\user\Desktop\Add.Net praces\Practes\ConsoleApp\obj\Debug\net10.0\ConsoleApp.sourcelink.json
