@@ -9,4 +9,6 @@ public interface IMentorRepository
     Task<bool> DeleteMentor(int mentorId);
     Task<Mentors> GetMentors(int mentorId);
     Task<List<Mentors>> GetMentor();
+    Task<Mentors> GetMentorWithMostStudents();
+    Task<List<Mentors>> GetMentorsWithMultipleCourses();
 }

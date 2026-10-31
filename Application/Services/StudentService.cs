@@ -30,11 +30,33 @@ public class StudentService(StudentRepository studentRepository) : IStudentServi
         }
     }
 
+    public async Task<List<Students>> GetDroppedOutStudents()
+    {
+        return await studentRepository1.GetDroppedOutStudents();
+    }
+
+    public async Task<List<Students>> GetGraduatedStudents()
+    {
+        return await studentRepository1.GetGraduatedStudents();
+    }
+
+
     public async Task GetStudent(int studentId)
     {
         var result=await studentRepository1.GetStudent(studentId);
         Console.WriteLine(result.Id+" "+result.Fullname+" "+result.Email+" "+result.Phone+" "+result.EnrollmentDate);
     }
+
+    public async Task<List<Students>> GetStudentsWithGroups()
+    {
+        return await studentRepository1.GetStudentsWithGroups();
+    }
+
+    public async Task<List<Students>> GetStudentsWithoutGroups()
+    {
+        return await studentRepository1.GetStudentsWithoutGroups();
+    }
+
 
     public async Task UpdateStudent(Students student)
     {

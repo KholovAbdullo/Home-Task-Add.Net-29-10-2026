@@ -9,4 +9,5 @@ public interface IStudentGroupsService
     Task DeleteStudentGroup(int groupId);
     Task GetStudentGroup(int groupId);
     Task GetAllStudentGroup();
+    Task<decimal> GetCompletionRate();
 }

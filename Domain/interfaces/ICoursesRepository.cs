@@ -9,4 +9,8 @@ public interface ICoursesRepository
     Task<bool> DeleteCourses(int courseId);
     Task<Courses> GetCourse(int courseId);
     Task<List<Courses>> GetCourses();
+    Task<List<Courses>> GetStudentsPerCourse();
+    Task<Courses> GetMostPopularCourse();
+    Task<List<Courses>> GetLeastPopularCourses();
+    Task<List<Courses>> GetTopThreeCourses();
 }

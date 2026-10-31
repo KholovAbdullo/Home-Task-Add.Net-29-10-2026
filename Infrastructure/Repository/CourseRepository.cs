@@ -43,6 +43,43 @@ public class CourseRepository(Database database) : ICoursesRepository
         return query.ToList();
     }
 
+    public async Task<List<Courses>> GetLeastPopularCourses()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select c.id,c.title,count(sg.student_id) from Courses c left join Groups g on c.id=g.course_id left join StudentGroups sg on g.id=sg.group_id group by c.id,c.title order by count(sg.student_id) limit 3";
+        var result = await conn.QueryAsync<Courses>(query);
+        return result.ToList();
+    }
+
+    public async Task<Courses> GetMostPopularCourse()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select c.id,c.title,count(sg.student_id) from Courses c left join Groups g on c.id=g.course_id left join StudentGroups sg on g.id=sg.group_id group by c.id,c.title order by count(sg.student_id) desc limit 1";
+        var result=await conn.QuerySingleAsync<Courses>(query);
+        return result;
+    }
+
+    public async Task<List<Courses>> GetStudentsPerCourse()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select c.id,c.title,count(sg.student_id) from Courses c left join Groups g on c.id=g.course_id left join StudentGroups sg on g.id=sg.group_id group by c.id,c.title";
+        var result=await conn.QueryAsync<Courses>(query);
+        return result.ToList();
+    }
+
+    public async Task<List<Courses>> GetTopThreeCourses()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select c.id,c.title,count(sg.student_id) from Courses c left join Groups g on c.id=g.course_id left join StudentGroups sg on g.id=sg.group_id group by c.id,c.title order by count(sg.student_id) desc limit 3";
+        var result = await conn.QueryAsync<Courses>(query);
+        return result.ToList();
+    }
+
+
     public async Task<bool> UpdateCourses(Courses courses)
     {
         using var conn=database1.Connection();

@@ -52,4 +52,21 @@ public class MentorRepository(Database database) : IMentorRepository
         return result>0;
     }
 
+    public async Task<Mentors> GetMentorWithMostStudents()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select m.id,m.fullname, count(sg.student_id) from Mentors m left join Groups g on m.id=g.mentor_id left join StudentGroups sg on g.id=sg.group_id group by m.id,m.fullname order by count(sg.student_id) desc limit 1";
+        var result = await conn.QuerySingleAsync<Mentors>(query);
+        return result;
+    }
+
+    public async Task<List<Mentors>> GetMentorsWithMultipleCourses()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select m.id,m.fullname from Mentors m left join Groups g on m.id=g.mentor_id group by m.id,m.fullname having count(g.course_id)>1";
+        var result = await conn.QueryAsync<Mentors>(query);
+        return result.ToList();
+    }
 }

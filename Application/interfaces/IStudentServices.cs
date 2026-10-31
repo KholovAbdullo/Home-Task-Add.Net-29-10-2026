@@ -9,4 +9,8 @@ public interface IStudentServices
     Task DeleteStudent(int studentId);
     Task GetStudent(int studentId);
     Task GetAllStudents();
+    Task<List<Students>> GetStudentsWithGroups();
+    Task<List<Students>> GetStudentsWithoutGroups();
+    Task<List<Students>> GetDroppedOutStudents();
+    Task<List<Students>> GetGraduatedStudents();
 }

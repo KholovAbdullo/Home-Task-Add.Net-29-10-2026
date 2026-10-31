@@ -9,4 +9,6 @@ public interface IGroupsService
     Task DeleteGroup(int groupId);
     Task GetGroup(int groupId);
     Task GetAllGroup();
+    Task<List<Groups>> GetStudentsPerGroup();
+    Task<List<Groups>> GetEmptyGroups();
 }

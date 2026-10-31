@@ -26,6 +26,16 @@ public class GroupsRepository(Database database) : IGroupsRepository
         return result>0;
     }
 
+    public async Task<List<Groups>> GetEmptyGroups()
+    {
+        using var conn = database1.Connection();
+        conn.Open();
+        var query="select * from Groups g left join StudentGroups sg on g.id=sg.group_id where sg.student_id is null";
+        var result = await conn.QueryAsync<Groups>(query);
+        return result.ToList();
+    }
+
+
     public async Task<Groups> GetGroup(int groupId)
     {
         using var con=database1.Connection();
@@ -42,6 +52,16 @@ public class GroupsRepository(Database database) : IGroupsRepository
         var query=await conn.QueryAsync<Groups>("select * from Groups");
         return query.ToList();
     }
+
+    public async Task<List<Groups>> GetStudentsPerGroup()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select g.id,g.name,count(sg.student_id) from Groups g left join StudentGroups sg on g.id=sg.group_id group by g.id,g.name";
+        var result = await conn.QueryAsync<Groups>(query);
+        return result.ToList();
+    }
+
 
     public async Task<bool> UpdateGroup(Groups group)
     {

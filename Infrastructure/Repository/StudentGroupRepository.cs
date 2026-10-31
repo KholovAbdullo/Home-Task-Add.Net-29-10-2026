@@ -26,6 +26,15 @@ public class StudentGroupRepository(Database database) : IStudentGroupsRepositor
         return result>0;
     }
 
+    public async Task<decimal> GetCompletionRate()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select count(*) * 100.0 / (select count(*) from Students) from StudentGroups sg join Students s on s.id=sg.student_id where sg.Status = 'Завершил'";
+        var resul = await conn.ExecuteScalarAsync<decimal>(query);
+        return resul;
+    }
+
     public async Task<StudentGroups> GetStudentGroup(int groupId)
     {
         using var conn=database1.Connection();

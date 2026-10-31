@@ -30,11 +30,24 @@ public class GroupsService(GroupsRepository groupsRepository) : IGroupsService
         }
     }
 
+    public async Task<List<Groups>> GetEmptyGroups()
+    {
+        var result = await groupsRepository1.GetEmptyGroups();
+        return result;
+    }
+
+
     public async Task GetGroup(int groupId)
     {
         var result = await groupsRepository1.GetGroup(groupId);
         Console.WriteLine(result.GroupName+" "+result.CourseId+" "+result.MentorId+" "+result.StartDate+" "+result.EndDate);
 
+    }
+
+    public async Task<List<Groups>> GetStudentsPerGroup()
+    {
+        var result=await groupsRepository1.GetStudentsPerGroup();
+        return result;
     }
 
     public async Task UpdateGroup(Groups group)

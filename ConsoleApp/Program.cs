@@ -3,6 +3,7 @@ using Infrastructure.Data;
 using Application.Services;
 using Domain.Models;
 using Domain.Enames;
+using System.Data.Common;
 
 var Database = new Database();
 var StudentRepository = new StudentRepository(Database);
@@ -25,34 +26,47 @@ while (true)
     3 - Add new student.
     4 - Update student.
     5 - Delete student.
+    6 - GetStudentsWithGroups.
+    7 - GetStudentsWithoutGroups.
+    8 - GetDroppedOutStudents.
+    9 - GetGraduatedStudents.
 
     Table Courses!
-    6 - Show all courses.
-    7 - Show course.
-    8 - Add new course.
-    9 - Update course.
-    10 - Delete course.
-
+    10 - Show all courses.
+    11 - Show course.
+    12 - Add new course.
+    13 - Update course.
+    14 - Delete course.
+    15 - GetStudentsPerCourse.
+    16 - GetMostPopularCourse.
+    17 - GetLeastPopularCourses.
+    18 - GetTopThreeCourses.
+    
     Table Mentors!
-    11 - Show all mentors.
-    12 - Show mentor.
-    13 - Add new mentors.
-    14 - Update mentors.
-    15 - Delete mentors.
+    19 - Show all mentors.
+    20 - Show mentor.
+    21 - Add new mentors.
+    22 - Update mentors.
+    23 - Delete mentors.
+    24 - GetMentorWithMostStudents.
+    25 - GetMentorsWithMultipleCourses.
 
     Table Groups!
-    16 - Show all groups.
-    17 - Show groups.
-    18 - Add new groups.
-    19 - Update groups.
-    20 - Delete groups.
+    26 - Show all groups.
+    27 - Show groups.
+    28 - Add new groups.
+    29 - Update groups.
+    30 - Delete groups.
+    31 - GetStudentsPerGroup.
+    32 - GetEmptyGroups.
 
     Table StudentGroups!
-    21 - Show all studentgroups.
-    22 - Show studentgroups.
-    23 - Add new studentgroups.
-    24 - Update studentgroups.
-    25 - Delete studentgroups.
+    33 - Show all studentgroups.
+    34 - Show studentgroups.
+    35 - Add new studentgroups.
+    36 - Update studentgroups.
+    37 - Delete studentgroups.
+    38 - GetCompletionRate.
     0 - Exit.");
     var option = Console.ReadLine();
     Console.WriteLine("==================================");
@@ -62,11 +76,13 @@ while (true)
         case "1":
             await studentService.GetAllStudents();
             break;
+
         case "2":
             Console.Write("Enter id: ");
             var student_id = Convert.ToInt32(Console.ReadLine());
             await studentService.GetStudent(student_id);
             break;
+
         case "3":
             Console.Write("Enter fullname: ");
             var fullname = Console.ReadLine()!;
@@ -85,6 +101,7 @@ while (true)
             };
             await studentService.AddStudent(student);
             break;
+
         case "4":
             Console.Write("Enter id: ");
             var uStudentId = Convert.ToInt32(Console.ReadLine());
@@ -106,23 +123,55 @@ while (true)
             };
             await studentService.UpdateStudent(uStudent);
             break;
+
         case "5":
             Console.Write("Enter id: ");
             var dStudentId = Convert.ToInt32(Console.ReadLine());
             await studentService.DeleteStudent(dStudentId);
             break;
-
+        
         case "6":
-            await courseService.GetAllCourse();
+            var resul = await studentService.GetStudentsWithoutGroups();
+            foreach (var item in resul)
+            {
+                Console.WriteLine(item.Id+" "+item.Fullname);
+            }
             break;
 
         case "7":
+            var resuls = await studentService.GetStudentsWithoutGroups();
+            foreach (var item in resuls)
+            {
+                Console.WriteLine(item.Id+" "+item.Fullname);
+            }
+            break;
+        
+        case "8":
+            var result = await studentService.GetDroppedOutStudents();
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.Id+" "+item.Fullname);
+            }
+            break;
+
+        case "9":
+            var resultt = await studentService.GetGraduatedStudents();
+            foreach (var item in resultt)
+            {
+                Console.WriteLine(item.Id+" "+item.Fullname);
+            }
+            break;
+        case "10":
+            await courseService.GetAllCourse();
+            break;
+
+        case "11":
             Console.Write("Enter id: ");
             var course_id = Convert.ToInt32(Console.ReadLine());
             await courseService.GetCourse(course_id);
             break;
 
-        case "8":
+        case "12":
             Console.Write("Enter title: ");
             var title = Console.ReadLine()!;
             Console.Write("Enter description: ");
@@ -138,7 +187,7 @@ while (true)
             await courseService.AddCourse(course);
             break;
 
-        case "9":
+        case "13":
             Console.Write("Enter id: ");
             var uCourseId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter title: ");
@@ -157,23 +206,53 @@ while (true)
             await courseService.UpdateCourse(uCourse);
             break;
 
-        case "10":
+        case "14":
             Console.Write("Enter id: ");
             var dCourseId = Convert.ToInt32(Console.ReadLine());
             await courseService.DeleteCourse(dCourseId);
             break;
+            
+        case "15":
+            var r=await courseService.GetStudentsPerCourse();
+            foreach (var item in r)
+            {
+                Console.WriteLine(item.Id+" "+item.Title);
+            } 
+            break;
+        
+        case "16":
+            var re = await courseService.GetMostPopularCourse();
+            Console.WriteLine(re.Id+" "+re.Title);
+            break;
+        
+        case "17":
+            var res = await courseService.GetLeastPopularCourses();
+            foreach (var item in res)
+            {
+                Console.WriteLine(item.Id+" "+item.Title);
+            }
+            break;
 
-        case "11":
+        case "18":
+            var ress=await courseService.GetTopThreeCourses();
+            foreach (var item in ress)
+            {
+                Console.WriteLine(item.Id+" "+item.Title);
+            }    
+
+            break;
+
+        case "19":
             await mentorService.GetAllMentor();
             break;
 
-        case "12":
+        case "20":
             Console.Write("Enter id: ");
             var mentor_id = Convert.ToInt32(Console.ReadLine());
             await mentorService.GetMentor(mentor_id);
             break;
 
-        case "13":
+        case "21":
             Console.Write("Enter fullname: ");
             var mentorFullname = Console.ReadLine()!;
             Console.Write("Enter email: ");
@@ -189,7 +268,7 @@ while (true)
             await mentorService.AddMentor(mentor);
             break;
 
-        case "14":
+        case "22":
             Console.Write("Enter id: ");
             var uMentorId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter fullname: ");
@@ -208,23 +287,36 @@ while (true)
             await mentorService.UpdateMentor(uMentor);
             break;
 
-        case "15":
+        case "23":
             Console.Write("Enter id: ");
             var dMentorId = Convert.ToInt32(Console.ReadLine());
             await mentorService.DeleteMentor(dMentorId);
             break;
 
-        case "16":
+        case "24":
+            var men=await mentorService.GetMentorWithMostStudents();
+            Console.WriteLine(men.Id+" "+men.Fullname);
+            break;
+
+        case "25":
+            var ment = await mentorService.GetMentorsWithMultipleCourses();
+            foreach (var item in ment)
+            {
+                Console.WriteLine(item.Id+" "+item.Fullname);
+            }
+            break;
+
+        case "26":
             await groupService.GetAllGroup();
             break;
 
-        case "17":
+        case "27":
             Console.Write("Enter id: ");
             var group_id = Convert.ToInt32(Console.ReadLine());
             await groupService.GetGroup(group_id);
             break;
 
-        case "18":
+        case "28":
             Console.Write("Enter group name: ");
             var groupName = Console.ReadLine()!;
             Console.Write("Enter course id: ");
@@ -240,7 +332,7 @@ while (true)
             await groupService.AddGroup(group);
             break;
 
-        case "19":
+        case "29":
             Console.Write("Enter id: ");
             var uGroupId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter group name: ");
@@ -259,23 +351,39 @@ while (true)
             await groupService.UpdateGroup(uGroup);
             break;
 
-        case "20":
+        case "30":
             Console.Write("Enter id: ");
             var dGroupId = Convert.ToInt32(Console.ReadLine());
             await groupService.DeleteGroup(dGroupId);
             break;
 
-        case "21":
+        case "31":
+            var mn = await groupService.GetStudentsPerGroup();
+            foreach (var g in mn)
+            {
+                Console.WriteLine(g.Id+" "+g.GroupName);
+            }
+            break;
+
+        case "32":
+            var grou = await groupService.GetEmptyGroups();
+            foreach (var g in grou)
+            {
+                Console.WriteLine(g.Id+" "+g.GroupName);
+            }
+            break;
+
+        case "33":
             await studentgroupService.GetAllStudentGroup();
             break;
 
-        case "22":
+        case "34":
             Console.Write("Enter id: ");
             var studentGroupId = Convert.ToInt32(Console.ReadLine());
             await studentgroupService.GetStudentGroup(studentGroupId);
             break;
 
-        case "23":
+        case "35":
             Console.Write("Enter student id: ");
             var studentId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter group id: ");
@@ -290,7 +398,7 @@ while (true)
             await studentgroupService.AddStudentGroup(studentGroup);
             break;
 
-        case "24":
+        case "36":
             Console.Write("Enter id: ");
             var uStudentGroupId = Convert.ToInt32(Console.ReadLine());
             Console.Write("Enter student id: ");
@@ -308,10 +416,15 @@ while (true)
             await studentgroupService.UpdateStudentGroup(uStudentGroup);
             break;
 
-        case "25":
+        case "37":
             Console.Write("Enter id: ");
             var dStudentGroupId = Convert.ToInt32(Console.ReadLine());
             await studentgroupService.DeleteStudentGroup(dStudentGroupId);
+            break;
+
+        case "38":
+            var sg = await studentgroupService.GetCompletionRate();
+            Console.WriteLine($"Completion Rate: {sg}%");
             break;
 
         case "0":
@@ -319,3 +432,4 @@ while (true)
             return;
     }
 }
+

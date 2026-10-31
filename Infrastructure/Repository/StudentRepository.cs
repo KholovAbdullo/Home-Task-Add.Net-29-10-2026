@@ -26,6 +26,25 @@ public class StudentRepository(Database database) : IStudentRepository
         return result>0;
     }
 
+    public async Task<List<Students>> GetDroppedOutStudents()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select * from Students s join StudentGroups sg on s.id=sg.student_id where sg.Status='Отчислен'";
+        var result=await conn.QueryAsync<Students>(query);
+        return result.ToList();
+    }
+
+    public async Task<List<Students>> GetGraduatedStudents()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select * from Students s join StudentGroups sg on s.id=sg.student_id where sg.Status='Завершил'";
+        var result=await conn.QueryAsync<Students>(query);
+        return result.ToList();
+    }
+
+
     public async Task<Students> GetStudent(int studentId)
     {
         using var conn=database1.Connection();
@@ -42,6 +61,25 @@ public class StudentRepository(Database database) : IStudentRepository
         var query=await conn.QueryAsync<Students>("select * from Students");
         return query.ToList();
     }
+
+    public async Task<List<Students>> GetStudentsWithGroups()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select * from Students s join StudentGroups sg on s.id=sg.student_id";
+        var result=await conn.QueryAsync<Students>(query);
+        return result.ToList();
+    }
+
+    public async Task<List<Students>> GetStudentsWithoutGroups()
+    {
+        using var conn=database1.Connection();
+        conn.Open();
+        var query="select * from Students s left join StudentGroups sg on s.id=sg.student_id where sg.student_id is null";
+        var result=await conn.QueryAsync<Students>(query);
+        return result.ToList();
+    }
+
 
     public async Task<bool> UpdateStudent(Students student)
     {

@@ -36,6 +36,31 @@ public class CourseService(CourseRepository courseRepository) : ICourseService
         Console.WriteLine(result.Id+" "+result.Title+" "+result.Description+" "+result.DurationWeeks);
     }
 
+    public async Task<List<Courses>> GetLeastPopularCourses()
+    {
+        var result = await courseRepository1.GetLeastPopularCourses();
+        return result;
+    }
+
+    public async Task<Courses> GetMostPopularCourse()
+    {
+        var result=await courseRepository1.GetMostPopularCourse();
+        return result;
+    }
+
+    public async Task<List<Courses>> GetStudentsPerCourse()
+    {
+        var result = await courseRepository1.GetStudentsPerCourse();
+        return result;
+    }
+
+    public async Task<List<Courses>> GetTopThreeCourses()
+    {
+        var result = await courseRepository1.GetTopThreeCourses();
+        return result;
+    }
+
+
     public async Task UpdateCourse(Courses course)
     {
         var result=await courseRepository1.UpdateCourses(course);

@@ -37,6 +37,19 @@ public class MentorService(MentorRepository mentorRepository) : IMentorService
 
     }
 
+    public async Task<List<Mentors>> GetMentorsWithMultipleCourses()
+    {
+        var result = await mentorRepository1.GetMentorsWithMultipleCourses();
+        return result;
+    }
+
+    public async Task<Mentors> GetMentorWithMostStudents()
+    {
+        var result=await mentorRepository1.GetMentorWithMostStudents();
+        return result;
+    }
+
+
     public async Task UpdateMentor(Mentors mentor)
     {
         var result=await mentorRepository1.UpdateMentor(mentor);

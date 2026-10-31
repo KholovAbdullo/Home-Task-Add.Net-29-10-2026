@@ -30,12 +30,20 @@ public class StudentGroupsService(StudentGroupRepository studentGroupRepository)
         }
     }
 
+    public async Task<decimal> GetCompletionRate()
+    {
+        var resul=await studentGroupRepository1.GetCompletionRate();
+        return resul;
+    }
+
+
     public async Task GetStudentGroup(int groupId)
     {
         var resul=await studentGroupRepository1.GetStudentGroup(groupId);
         Console.WriteLine(resul.StudentId+" "+resul.GroupId+" "+resul.Status);
 
     }
+
 
     public async Task UpdateStudentGroup(StudentGroups group)
     {
