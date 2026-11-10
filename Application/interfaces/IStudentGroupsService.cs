@@ -1,13 +1,13 @@
+using Application.Responses;
 using Domain.Models;
 
 namespace Application.interfaces;
 
 public interface IStudentGroupsService
 {
-    Task AddStudentGroup(StudentGroups group);
-    Task UpdateStudentGroup(StudentGroups group);
-    Task DeleteStudentGroup(int groupId);
-    Task GetStudentGroup(int groupId);
-    Task GetAllStudentGroup();
-    Task<decimal> GetCompletionRate();
+    Task<ApiResponse<bool>> AddStudentGroup(StudentGroups group);
+    Task<ApiResponse<bool>> UpdateStudentGroup(StudentGroups group);
+    Task<ApiResponse<bool>> DeleteStudentGroup(int groupId);
+    Task<ApiResponse<StudentGroups>> GetStudentGroup(int groupId);
+    Task<ApiResponse<List<StudentGroups>>> GetStudentGroups();
 }

@@ -1,60 +1,52 @@
+using System.Net;
 using Application.interfaces;
+using Application.Responses;
+using Domain.interfaces;
 using Domain.Models;
 using Infrastructure.Repository;
 
 namespace Application.Services;
 
-public class MentorService(MentorRepository mentorRepository) : IMentorService
+public class MentorService(IMentorRepository mentorRepository) : IMentorService
 {
-    private MentorRepository mentorRepository1 = mentorRepository;
-    public async Task AddMentor(Mentors mentor)
+    private IMentorRepository mentorRepository1 = mentorRepository;
+
+    public async Task<ApiResponse<bool>> AddMentor(Mentors mentor)
     {
-       var result=await mentorRepository1.AddMentor(mentor);
-       if(result)Console.WriteLine("Added successfully!");
-       else Console.WriteLine("Added nashud!");
+        var res = await mentorRepository1.AddMentor(mentor);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Added!",res);
     }
 
-    public async Task DeleteMentor(int mentorId)
+    public async Task<ApiResponse<bool>> DeleteMentor(int mentorId)
     {
-        var result=await mentorRepository1.DeleteMentor(mentorId);
-        if(result)Console.WriteLine("Delete successfully!");
-        else Console.WriteLine("Delete nashud!");
+        var res = await mentorRepository1.DeleteMentor(mentorId);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Delete!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Delete!",res);
     }
 
-    public async Task GetAllMentor()
+    public async Task<ApiResponse<List<Mentors>>> GetMentor()
     {
-        var result =await mentorRepository1.GetMentor();
-        foreach (var m in result)
-        {
-            Console.WriteLine(m.Id+" "+m.Fullname+" "+m.Email+" "+m.Phone+" "+m.Specialization);
-        }
+        var res = await mentorRepository1.GetMentor();
+        return new ApiResponse<List<Mentors>>(HttpStatusCode.OK, "GetMentor!",res);
     }
 
-    public async Task GetMentor(int mentorId)
+    public async Task<ApiResponse<Mentors>> GetMentors(int mentorId)
     {
-        var mentor=await mentorRepository1.GetMentors(mentorId);
-        Console.WriteLine(mentor.Id+" "+mentor.Fullname+" "+mentor.Email+" "+mentor.Phone+" "+mentor.Specialization);
-
+        var res = await mentorRepository1.GetMentors(mentorId);
+        return res != null
+        ? new ApiResponse<Mentors>(HttpStatusCode.OK, "GetMentor id!",res)
+        : new ApiResponse<Mentors>(HttpStatusCode.NotFound, "Not GenMentor id!",res!);
     }
 
-    public async Task<List<Mentors>> GetMentorsWithMultipleCourses()
+    public async Task<ApiResponse<bool>> UpdateMentor(Mentors mentor)
     {
-        var result = await mentorRepository1.GetMentorsWithMultipleCourses();
-        return result;
-    }
-
-    public async Task<Mentors> GetMentorWithMostStudents()
-    {
-        var result=await mentorRepository1.GetMentorWithMostStudents();
-        return result;
-    }
-
-
-    public async Task UpdateMentor(Mentors mentor)
-    {
-        var result=await mentorRepository1.UpdateMentor(mentor);
-        if(result)Console.WriteLine("Update successfully!");
-        else Console.WriteLine("Update nashud!");
+        var res = await mentorRepository1.UpdateMentor(mentor);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Update!",res);
     }
 
 }

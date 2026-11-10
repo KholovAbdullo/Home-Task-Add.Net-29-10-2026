@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KZYNmRF1/q8=",
+  "dgSpecHash": "p1UxoMSDUw8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\dapper\\2.1.89\\dapper.2.1.89.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.0\\microsoft.extensions.dependencyinjection.abstractions.10.0.0.nupkg.sha512",

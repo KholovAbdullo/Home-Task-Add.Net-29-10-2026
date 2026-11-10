@@ -1,60 +1,52 @@
+using System.Net;
 using Application.interfaces;
+using Application.Responses;
+using Domain.interfaces;
 using Domain.Models;
 using Infrastructure.Repository;
 
 namespace Application.Services;
 
-public class GroupsService(GroupsRepository groupsRepository) : IGroupsService
+public class GroupsService(IGroupsRepository groupsRepository) : IGroupsService
 {
-    private GroupsRepository groupsRepository1 = groupsRepository;
-    public async Task AddGroup(Groups group)
+    private IGroupsRepository groupsRepository1 = groupsRepository;
+
+    public async Task<ApiResponse<bool>> AddGroup(Groups group)
     {
-        var result=await groupsRepository1.AddGroup(group);
-        if(result)Console.WriteLine("Added successfully!");
-        else Console.WriteLine("Added nashud!");
+        var res = await groupsRepository1.AddGroup(group);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Added!", res);
     }
 
-    public async Task DeleteGroup(int groupId)
+    public async Task<ApiResponse<bool>> DeleteGroup(int groupId)
     {
-        var result=await groupsRepository1.DeleteGroup(groupId);
-        if(result)Console.WriteLine("Delete successfully!");
-        else Console.WriteLine("Delete nashud!");
+        var res = await groupsRepository1.DeleteGroup(groupId);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Delete!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Delete!", res);
     }
 
-    public async Task GetAllGroup()
+    public async Task<ApiResponse<Groups>> GetGroup(int groupId)
     {
-        var result=await groupsRepository1.GetGroups();
-        foreach (var g in result)
-        {
-            Console.WriteLine(g.GroupName+" "+g.CourseId+" "+g.MentorId+" "+g.StartDate+" "+g.EndDate);
-        }
+        var res = await groupsRepository1.GetGroup(groupId);
+        return res != null
+        ? new ApiResponse<Groups>(HttpStatusCode.OK, "GetGroup id",res)
+        : new ApiResponse<Groups>(HttpStatusCode.NotFound, "Not GetGroup id!", res!);
     }
 
-    public async Task<List<Groups>> GetEmptyGroups()
+    public async Task<ApiResponse<List<Groups>>> GetGroups()
     {
-        var result = await groupsRepository1.GetEmptyGroups();
-        return result;
+        var res = await groupsRepository1.GetGroups();
+        return new ApiResponse<List<Groups>>(HttpStatusCode.OK, "ListGroup",res);
     }
 
-
-    public async Task GetGroup(int groupId)
+    public async Task<ApiResponse<bool>> UpdateGroup(Groups group)
     {
-        var result = await groupsRepository1.GetGroup(groupId);
-        Console.WriteLine(result.GroupName+" "+result.CourseId+" "+result.MentorId+" "+result.StartDate+" "+result.EndDate);
-
-    }
-
-    public async Task<List<Groups>> GetStudentsPerGroup()
-    {
-        var result=await groupsRepository1.GetStudentsPerGroup();
-        return result;
-    }
-
-    public async Task UpdateGroup(Groups group)
-    {
-        var result = await groupsRepository1.UpdateGroup(group);
-        if(result)Console.WriteLine("Update successfully!");
-        else Console.WriteLine("Update nashud!");
+        var res = await groupsRepository1.UpdateGroup(group);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Update!", res);
     }
 
 }

@@ -1,16 +1,13 @@
+using Application.Responses;
 using Domain.Models;
 
 namespace Application.interfaces;
 
 public interface ICourseService
 {
-    Task AddCourse(Courses course);
-    Task UpdateCourse(Courses course);
-    Task DeleteCourse(int courseId);
-    Task GetCourse(int courseId);
-    Task GetAllCourse();
-    Task<List<Courses>> GetStudentsPerCourse();
-    Task<Courses> GetMostPopularCourse();
-    Task<List<Courses>> GetLeastPopularCourses();
-    Task<List<Courses>> GetTopThreeCourses();
+    Task<ApiResponse<bool>> AddCourses(Courses courses);
+    Task<ApiResponse<bool>> UpdateCourses(Courses courses);
+    Task<ApiResponse<bool>> DeleteCourses(int courseId);
+    Task<ApiResponse<Courses>> GetCourse(int courseId);
+    Task<ApiResponse<List<Courses>>> GetCourses();
 }

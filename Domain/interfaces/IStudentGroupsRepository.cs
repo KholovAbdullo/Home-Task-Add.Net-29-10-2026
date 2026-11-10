@@ -9,5 +9,4 @@ public interface IStudentGroupsRepository
     Task<bool> DeleteStudentGroup(int groupId);
     Task<StudentGroups> GetStudentGroup(int groupId);
     Task<List<StudentGroups>> GetStudentGroups();
-    Task<decimal> GetCompletionRate();
 }

@@ -1,71 +1,51 @@
+using System.Net;
 using Application.interfaces;
+using Application.Responses;
+using Domain.interfaces;
 using Domain.Models;
 using Infrastructure.Repository;
 
 namespace Application.Services;
 
-public class CourseService(CourseRepository courseRepository) : ICourseService
+public class CourseService(ICoursesRepository coursesRepository) : ICourseService
 {
-    private CourseRepository courseRepository1 = courseRepository;
-    public async Task AddCourse(Courses course)
+    private ICoursesRepository courseRepository1 = coursesRepository;
+
+    public async Task<ApiResponse<bool>> AddCourses(Courses courses)
     {
-        var result=await courseRepository1.AddCourses(course);
-        if(result)Console.WriteLine("Added successfully!");
-        else Console.WriteLine("Added nashud!");
+        var res = await courseRepository1.AddCourses(courses);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Added!",res);
     }
 
-    public async Task DeleteCourse(int courseId)
+    public async Task<ApiResponse<bool>> DeleteCourses(int courseId)
     {
-        var result=await courseRepository1.DeleteCourses(courseId);
-        if(result)Console.WriteLine("Delete successfully!");
-        else Console.WriteLine("Delete nashud!");
+        var res = await courseRepository1.DeleteCourses(courseId);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Delete!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Delete!",res);
     }
 
-    public async Task GetAllCourse()
+    public async Task<ApiResponse<Courses>> GetCourse(int courseId)
     {
-        var course=await courseRepository1.GetCourses();
-        foreach (var c in course)
-        {
-            Console.WriteLine(c.Id+" "+c.Title+" "+c.Description+" "+c.DurationWeeks);
-        }
+        var res = await courseRepository1.GetCourse(courseId);
+        return res != null
+        ? new ApiResponse<Courses>(HttpStatusCode.OK, "GetCourse id!",res)
+        : new ApiResponse<Courses>(HttpStatusCode.NotFound, "Not GetCourse id!",res!);
     }
 
-    public async Task GetCourse(int courseId)
+    public async Task<ApiResponse<List<Courses>>> GetCourses()
     {
-        var result=await courseRepository1.GetCourse(courseId);
-        Console.WriteLine(result.Id+" "+result.Title+" "+result.Description+" "+result.DurationWeeks);
+        var res = await courseRepository1.GetCourses();
+        return new ApiResponse<List<Courses>>(HttpStatusCode.OK, "ListCourses!",res);
     }
 
-    public async Task<List<Courses>> GetLeastPopularCourses()
+    public async Task<ApiResponse<bool>> UpdateCourses(Courses courses)
     {
-        var result = await courseRepository1.GetLeastPopularCourses();
-        return result;
+        var res = await courseRepository1.UpdateCourses(courses);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!",res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Update!",res);
     }
-
-    public async Task<Courses> GetMostPopularCourse()
-    {
-        var result=await courseRepository1.GetMostPopularCourse();
-        return result;
-    }
-
-    public async Task<List<Courses>> GetStudentsPerCourse()
-    {
-        var result = await courseRepository1.GetStudentsPerCourse();
-        return result;
-    }
-
-    public async Task<List<Courses>> GetTopThreeCourses()
-    {
-        var result = await courseRepository1.GetTopThreeCourses();
-        return result;
-    }
-
-
-    public async Task UpdateCourse(Courses course)
-    {
-        var result=await courseRepository1.UpdateCourses(course);
-        if(result)Console.WriteLine("Update successfully!");
-        else Console.WriteLine("Update nashud!");
-    }
-
 }

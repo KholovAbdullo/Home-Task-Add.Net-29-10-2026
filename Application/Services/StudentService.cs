@@ -1,68 +1,50 @@
+using System.Net;
 using Application.interfaces;
+using Application.Responses;
+using Domain.interfaces;
 using Domain.Models;
 using Infrastructure.Repository;
 
 namespace Application.Services;
 
-public class StudentService(StudentRepository studentRepository) : IStudentServices
+public class StudentService(IStudentRepository studentRepository) : IStudentServices
 {
-    private StudentRepository studentRepository1 = studentRepository;
-    public async Task AddStudent(Students student)
+    private IStudentRepository studentRepository1 = studentRepository;
+    public async Task<ApiResponse<bool>> AddStudent(Students student)
     {
-        var result=await studentRepository1.AddStudent(student);
-        if(result)Console.WriteLine("Added successfully!");
-        else Console.WriteLine("added nashud!");
+        var res = await studentRepository1.AddStudent(student);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Added!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Added!", res);
     }
 
-    public async Task DeleteStudent(int studentId)
+    public async Task<ApiResponse<bool>> DeleteStudent(int studentId)
     {
-        var result=await studentRepository1.DeleteStudent(studentId);
-        if(result)Console.WriteLine("Delete successfully!");
-        else Console.WriteLine("Delete nashud!");
+        var res = await studentRepository1.DeleteStudent(studentId);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Delete!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Delete!", res);
     }
 
-    public async Task GetAllStudents()
+    public async Task<ApiResponse<Students>> GetStudent(int studentId)
     {
-        var result=await studentRepository1.GetStudents();
-        foreach(var s in result)
-        {
-            Console.WriteLine(s.Id+" "+s.Fullname+" "+s.Email+" "+s.Phone+" "+s.EnrollmentDate);
-        }
+        var res = await studentRepository1.GetStudent(studentId);
+        return res !=null
+        ? new ApiResponse<Students>(HttpStatusCode.OK, "GetStudent!", res)
+        : new ApiResponse<Students>(HttpStatusCode.NotFound, "Not GetStudent!", res!);
     }
 
-    public async Task<List<Students>> GetDroppedOutStudents()
+    public async Task<ApiResponse<List<Students>>> GetStudents()
     {
-        return await studentRepository1.GetDroppedOutStudents();
+        var res = await studentRepository1.GetStudents();
+        return new ApiResponse<List<Students>>(HttpStatusCode.OK, "GetStudents!", res);
     }
 
-    public async Task<List<Students>> GetGraduatedStudents()
+    public async Task<ApiResponse<bool>> UpdateStudent(Students student)
     {
-        return await studentRepository1.GetGraduatedStudents();
+        var res = await studentRepository1.UpdateStudent(student);
+        return res == true
+        ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!", res)
+        : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Not Update!", res);
     }
-
-
-    public async Task GetStudent(int studentId)
-    {
-        var result=await studentRepository1.GetStudent(studentId);
-        Console.WriteLine(result.Id+" "+result.Fullname+" "+result.Email+" "+result.Phone+" "+result.EnrollmentDate);
-    }
-
-    public async Task<List<Students>> GetStudentsWithGroups()
-    {
-        return await studentRepository1.GetStudentsWithGroups();
-    }
-
-    public async Task<List<Students>> GetStudentsWithoutGroups()
-    {
-        return await studentRepository1.GetStudentsWithoutGroups();
-    }
-
-
-    public async Task UpdateStudent(Students student)
-    {
-        var result=await studentRepository1.UpdateStudent(student);
-        if(result)Console.WriteLine("Update successfully!");
-        else Console.WriteLine("update nashud!");
-    }
-
 }

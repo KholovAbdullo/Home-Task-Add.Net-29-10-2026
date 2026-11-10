@@ -9,6 +9,4 @@ public interface IGroupsRepository
     Task<bool> DeleteGroup(int groupId);
     Task<Groups> GetGroup(int groupId);
     Task<List<Groups>> GetGroups();
-    Task<List<Groups>> GetStudentsPerGroup();
-    Task<List<Groups>> GetEmptyGroups();
 }

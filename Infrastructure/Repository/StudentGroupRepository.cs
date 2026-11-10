@@ -12,7 +12,7 @@ public class StudentGroupRepository(Database database) : IStudentGroupsRepositor
     {
         using var conn=database1.Connection();
         conn.Open();
-        var query="insert into StudentGroups(student_id,group_id,Status) values(@student_id,@group_id,@Status)";
+        var query="insert into StudentGroups(student_id,group_id,Status) values(@StudentId,@GroupId,@Status)";
         var result=await conn.ExecuteAsync(query,group);
         return result>0;
     }   
@@ -24,15 +24,6 @@ public class StudentGroupRepository(Database database) : IStudentGroupsRepositor
         var query="delete from StudentGroups where id=@groupId";
         var result=await conn.ExecuteAsync(query,new{groupId});
         return result>0;
-    }
-
-    public async Task<decimal> GetCompletionRate()
-    {
-        using var conn=database1.Connection();
-        conn.Open();
-        var query="select count(*) * 100.0 / (select count(*) from Students) from StudentGroups sg join Students s on s.id=sg.student_id where sg.Status = 'Завершил'";
-        var resul = await conn.ExecuteScalarAsync<decimal>(query);
-        return resul;
     }
 
     public async Task<StudentGroups> GetStudentGroup(int groupId)
@@ -56,7 +47,7 @@ public class StudentGroupRepository(Database database) : IStudentGroupsRepositor
     {
         using var conn=database1.Connection();
         conn.Open();
-        var query="update StudentGroups set student_id=@student_id,group_id=@group_id,Status=@Status where id=@id";
+        var query="update StudentGroups set student_id=@StudentId,group_id=@GroupId,Status=@Status where id=@id";
         var resul=await conn.ExecuteAsync(query,group);
         return resul>0;
     }

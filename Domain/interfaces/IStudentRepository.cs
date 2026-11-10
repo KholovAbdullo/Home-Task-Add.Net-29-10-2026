@@ -9,8 +9,4 @@ public interface IStudentRepository
     Task<bool> DeleteStudent(int studentId);
     Task<Students> GetStudent(int studentId);
     Task<List<Students>> GetStudents();
-    Task<List<Students>> GetStudentsWithGroups();
-    Task<List<Students>> GetStudentsWithoutGroups();
-    Task<List<Students>> GetDroppedOutStudents();
-    Task<List<Students>> GetGraduatedStudents();
 }

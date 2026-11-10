@@ -280,11 +280,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\ConsoleApp\\ConsoleApp.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\ConsoleApp\\ConsoleApp.csproj",
       "projectName": "ConsoleApp",
-      "projectPath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\ConsoleApp\\ConsoleApp.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\ConsoleApp\\ConsoleApp.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\ConsoleApp\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\ConsoleApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -300,14 +300,14 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Application\\Application.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Application\\Application.csproj"
+            "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Application\\Application.csproj"
             },
-            "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Domain\\Domain.csproj"
+            "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\user\\Desktop\\Add.Net praces\\Practes\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\Net1moh\\Ado.Net\\haftai4\\CRM\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }

@@ -1,14 +1,13 @@
+using Application.Responses;
 using Domain.Models;
 
 namespace Application.interfaces;
 
 public interface IGroupsService
 {
-    Task AddGroup(Groups group);
-    Task UpdateGroup(Groups group);
-    Task DeleteGroup(int groupId);
-    Task GetGroup(int groupId);
-    Task GetAllGroup();
-    Task<List<Groups>> GetStudentsPerGroup();
-    Task<List<Groups>> GetEmptyGroups();
+    Task<ApiResponse<bool>> AddGroup(Groups group);
+    Task<ApiResponse<bool>> UpdateGroup(Groups group);
+    Task<ApiResponse<bool>> DeleteGroup(int groupId);
+    Task<ApiResponse<Groups>> GetGroup(int groupId);
+    Task<ApiResponse<List<Groups>>> GetGroups();
 }
