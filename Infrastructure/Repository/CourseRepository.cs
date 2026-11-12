@@ -43,13 +43,33 @@ public class CourseRepository(Database database) : ICoursesRepository
         return query.ToList();
     }
 
-    public async Task<bool> UpdateCourses(Courses courses)
+    public Task<List<Courses>> GetLeastPopularCourses()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Courses> GetMostPopularCourse()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Courses>> GetTopThreeCourses()
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public async Task<bool> UpdateCourses(int id,Courses courses)
     {
         using var conn=database1.Connection();
         conn.Open();
         var query="Update Courses set title=@title,description=@description,durationWeeks=@durationWeeks where id=@id";
-        var result=await conn.ExecuteAsync(query,courses);
+        var result=await conn.ExecuteAsync(query,new {id,courses.Title,courses.Description,courses.DurationWeeks});
         return result>0;
     }
 
+    Task<List<Courses>> ICoursesRepository.GetStudentsPerCourse()
+    {
+        throw new NotImplementedException();
+    }
 }

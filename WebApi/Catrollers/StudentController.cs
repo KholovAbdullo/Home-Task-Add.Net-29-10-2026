@@ -1,3 +1,4 @@
+using Application.DTOs.Students;
 using Application.interfaces;
 using Application.Responses;
 using Domain.Models;
@@ -12,15 +13,15 @@ public class StudentController(IStudentServices studentServices) : ControllerBas
     private IStudentServices studentServices1 = studentServices;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddStudent(Students student)
+    public async Task<ApiResponse<bool>> AddStudent(CreateStudentDto studentDto)
     {
-        return await studentServices1.AddStudent(student);
+        return await studentServices1.AddStudent(studentDto);
     }
 
-    [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateStudent(Students student)
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse<bool>> UpdateStudent(int id,UpdateStudentDto studentDto)
     {
-        return await studentServices1.UpdateStudent(student);
+        return await studentServices1.UpdateStudent(id,studentDto);
     }
 
     [HttpDelete]
@@ -30,20 +31,13 @@ public class StudentController(IStudentServices studentServices) : ControllerBas
     }
 
     [HttpGet("{studentId:int}")]
-    public async Task<ApiResponse<Students>> GetStudent(int studentId)
+    public async Task<ApiResponse<StudentDto>> GetStudent(int studentId)
     {
-        var res = await studentServices1.GetStudent(studentId);
-
-        if(res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await studentServices1.GetStudent(studentId);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Students>>> GetStudents()
+    public async Task<ApiResponse<List<StudentDto>>> GetStudents()
     {
         return await studentServices1.GetStudents();
     }

@@ -26,6 +26,12 @@ public class GroupsRepository(Database database) : IGroupsRepository
         return result>0;
     }
 
+    public Task<List<Groups>> GetEmptyGroups()
+    {
+        throw new NotImplementedException();
+    }
+
+
     public async Task<Groups> GetGroup(int groupId)
     {
         using var con=database1.Connection();
@@ -43,13 +49,23 @@ public class GroupsRepository(Database database) : IGroupsRepository
         return query.ToList();
     }
 
-    public async Task<bool> UpdateGroup(Groups group)
+    public Task<List<StudentGroups>> GetStudentsPerGroup()
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public async Task<bool> UpdateGroup(int id,Groups group)
     {
         using var conn=database1.Connection();
         conn.Open();
         var query="update Groups set GroupName=@GroupName,course_id=@course_id,mentor_id=@mentor_id,startDate=@startDate,EndDate=@EndDate where id=@id";
-        var result=await conn.ExecuteAsync(query,group);
+        var result=await conn.ExecuteAsync(query,new {id,group.GroupName,group.CourseId,group.MentorId,group.StartDate,group.EndDate});
         return result>0;
     }
 
+    Task<List<Groups>> IGroupsRepository.GetStudentsPerGroup()
+    {
+        throw new NotImplementedException();
+    }
 }

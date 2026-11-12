@@ -1,3 +1,4 @@
+using Application.DTOs.Courses;
 using Application.interfaces;
 using Application.Responses;
 using Domain.Models;
@@ -12,15 +13,15 @@ public class CoursesController(ICourseService courseService) : ControllerBase
     private ICourseService course = courseService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddCourses(Courses courses)
+    public async Task<ApiResponse<bool>> AddCourses(CreateCourseDto courses)
     {
         return await course.AddCourses(courses);
     }
 
-    [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateCourses(Courses courses)
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse<bool>> UpdateCourses(int id,UpdateCourseDto courses)
     {
-        return await course.UpdateCourses(courses);
+        return await course.UpdateCourses(id,courses);
     }
 
     [HttpDelete]
@@ -30,20 +31,13 @@ public class CoursesController(ICourseService courseService) : ControllerBase
     }
 
     [HttpGet("{courseId:int}")]
-    public Task<ApiResponse<Courses>> GetCourse(int courseId)
+    public Task<ApiResponse<CourseDto>> GetCourse(int courseId)
     {
-        var res = course.GetCourse(courseId);
-
-        if(res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return course.GetCourse(courseId);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Courses>>> GetCourses()
+    public async Task<ApiResponse<List<CourseDto>>> GetCourses()
     {
         return await course.GetCourses();
     }

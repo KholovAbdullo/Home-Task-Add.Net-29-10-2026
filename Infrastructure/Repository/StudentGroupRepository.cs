@@ -43,12 +43,24 @@ public class StudentGroupRepository(Database database) : IStudentGroupsRepositor
         return query.ToList();
     }
 
-    public async Task<bool> UpdateStudentGroup(StudentGroups group)
+    public Task<List<Students>> GetStudentsInGroup(int groupId)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public async Task<bool> UpdateStudentGroup(int id,StudentGroups group)
     {
         using var conn=database1.Connection();
         conn.Open();
         var query="update StudentGroups set student_id=@StudentId,group_id=@GroupId,Status=@Status where id=@id";
-        var resul=await conn.ExecuteAsync(query,group);
+        var resul=await conn.ExecuteAsync(query,new {id,group.StudentId,group.GroupId,group.Status});
         return resul>0;
     }
+
+    public Task<bool> UpdateStudentGroupStatus(int studentId, int groupId, string status)
+    {
+        throw new NotImplementedException();
+    }
+
 }

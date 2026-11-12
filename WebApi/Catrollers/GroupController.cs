@@ -1,3 +1,4 @@
+using Application.DTOs.Groups;
 using Application.interfaces;
 using Application.Responses;
 using Application.Services;
@@ -13,15 +14,15 @@ public class GroupController(IGroupsService groupsService) : ControllerBase
     private IGroupsService groupsService1 = groupsService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddGroup(Groups group)
+    public async Task<ApiResponse<bool>> AddGroup(CreateGroupDto group)
     {
         return await groupsService1.AddGroup(group);
     }
 
-    [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateGroup(Groups group)
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse<bool>> UpdateGroup(int id,UpdateGroupDto group)
     {
-        return await groupsService1.UpdateGroup(group);
+        return await groupsService1.UpdateGroup(id,group);
     }
 
     [HttpDelete]
@@ -31,20 +32,13 @@ public class GroupController(IGroupsService groupsService) : ControllerBase
     }
 
     [HttpGet("{groupId:int}")]
-    public async Task<ApiResponse<Groups>> GetGroup(int groupId)
+    public async Task<ApiResponse<GroupDto>> GetGroup(int groupId)
     {
-        var res = await groupsService1.GetGroup(groupId);
-
-        if (res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await groupsService1.GetGroup(groupId);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Groups>>> GetGroups()
+    public async Task<ApiResponse<List<GroupDto>>> GetGroups()
     {
         return await groupsService1.GetGroups();
     }

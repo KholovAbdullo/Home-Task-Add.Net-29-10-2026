@@ -43,12 +43,23 @@ public class MentorRepository(Database database) : IMentorRepository
         return query.ToList();
     }
 
-    public async Task<bool> UpdateMentor(Mentors mentor)
+    public async Task<bool> UpdateMentor(int id,Mentors mentor)
     {
         using var conn=database1.Connection();
         conn.Open();
         var query="Update Mentors set fullname=@fullname,email=@email,phone=@phone,specialization=@specialization where id=@id";
-        var result=await conn.ExecuteAsync(query,mentor);
+        var result=await conn.ExecuteAsync(query,new {id,mentor.Fullname,mentor.Email,mentor.Phone,mentor.Specialization});
         return result>0;
     }
+
+    public Task<Mentors> GetMentorWithMostStudents()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Mentors>> GetMentorsWithMultipleCourses()
+    {
+        throw new NotImplementedException();
+    }
+
 }

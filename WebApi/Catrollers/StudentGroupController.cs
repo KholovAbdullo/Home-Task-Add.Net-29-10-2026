@@ -1,3 +1,4 @@
+using Application.DTOs.StudentGroups;
 using Application.interfaces;
 using Application.Responses;
 using Domain.interfaces;
@@ -13,15 +14,15 @@ public class StudentGroupController(IStudentGroupsService studentGroupsService) 
     private IStudentGroupsService studentGroupsService1 = studentGroupsService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddStudentGroup(StudentGroups group)
+    public async Task<ApiResponse<bool>> AddStudentGroup(CreateStudentGroupDto group)
     {
         return await studentGroupsService1.AddStudentGroup(group);
     }
 
-    [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateStudentGroup(StudentGroups group)
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse<bool>> UpdateStudentGroup(int id,UpdateStudentGroupDto group)
     {
-        return await studentGroupsService1.UpdateStudentGroup(group);
+        return await studentGroupsService1.UpdateStudentGroup(id,group);
     }
 
     [HttpDelete]
@@ -31,20 +32,13 @@ public class StudentGroupController(IStudentGroupsService studentGroupsService) 
     }
 
     [HttpGet("{groupId:int}")]
-    public async Task<ApiResponse<StudentGroups>> GetStudentGroup(int groupId)
+    public async Task<ApiResponse<StudentGroupDto>> GetStudentGroup(int groupId)
     {
-        var res = await studentGroupsService1.GetStudentGroup(groupId);
-
-        if (res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await studentGroupsService1.GetStudentGroup(groupId);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<StudentGroups>>> GetStudentGroups()
+    public async Task<ApiResponse<List<StudentGroupDto>>> GetStudentGroups()
     {
         return await studentGroupsService1.GetStudentGroups();
     }

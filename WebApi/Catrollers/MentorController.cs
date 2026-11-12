@@ -1,3 +1,4 @@
+using Application.DTOs.Mentors;
 using Application.interfaces;
 using Application.Responses;
 using Domain.Models;
@@ -12,15 +13,15 @@ public class MentorController(IMentorService mentorService) : ControllerBase
     private IMentorService mentorService1 = mentorService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddMentor(Mentors mentor)
+    public async Task<ApiResponse<bool>> AddMentor(CreateMentorDto mentor)
     {
         return await mentorService1.AddMentor(mentor);
     }
 
-    [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateMentor(Mentors mentor)
+    [HttpPut("{id:int}")]
+    public async Task<ApiResponse<bool>> UpdateMentor(int id,UpdateMentorDto mentor)
     {
-        return await mentorService1.UpdateMentor(mentor);
+        return await mentorService1.UpdateMentor(id,mentor);
     }
 
     [HttpDelete]
@@ -30,20 +31,13 @@ public class MentorController(IMentorService mentorService) : ControllerBase
     }
 
     [HttpGet("{mentorId:int}")]
-    public async Task<ApiResponse<Mentors>> GetMentors(int mentorId)
+    public async Task<ApiResponse<MentorDto>> GetMentors(int mentorId)
     {
-        var res = await mentorService1.GetMentors(mentorId);
-
-        if(res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await mentorService1.GetMentors(mentorId);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Mentors>>> GetMentor()
+    public async Task<ApiResponse<List<MentorDto>>> GetMentor()
     {
         return await mentorService1.GetMentor();
     }
